@@ -1,3 +1,19 @@
+<?php
+  $curl = curl_init();
+  curl_setopt($curl, CURLOPT_URL , 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=UCdvViw-lmPEWHNPWtJUI8pQ&key=AIzaSyCUntta3ewQIw1Yx_L8mtZ0lQHM5-mcVSM');
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+  $result = curl_exec($curl);
+  curl_close($curl);
+
+  $result = json_decode($result,true);
+  
+  $youtubeProfilPic = $result['items'][0]['snippet']['thumbnails']['default']['url'];
+  $youtubeProfilName = $result['items'][0]['snippet']['title'];  
+  $youtubeProfilSubs = $result['items'][0]['statistics']['subscriberCount'];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
@@ -197,12 +213,21 @@
             <h2 class="text-gelap font-semibold text-lg lg:pt-10">
               Mari berteman di dunia maya!
             </h2>
-            <p
-              class="mt-4 text-secondary font-normal mb-5 md:text-base lg:text-lg"
-            >
-              Tak kenal maka tak sayang!. Untuk memperpanjang shilaturahmi mari
-              kita bertemenan di social media. Jangan lupa follow ya!
-            </p>
+            <div class="w-full flex">
+              <div class="basis-1/4 mt-4 flex  text-secondary font-normal mb-5  md:text-base lg:text-lg">
+                  <img src="<?= $youtubeProfilPic; ?>" alt="" class="rounded-full border-4 border-l-slate-100 m-auto">  
+              </div>
+              <div class="basis-3/4 mt-4 p-4  text-secondary font-normal mb-5 md:text-base lg:text-lg">
+                    <h1><?= $youtubeProfilName; ?></h1>
+                    <p>Subscriber : <?= $youtubeProfilSubs; ?></p>
+                    <div class="g-ytsubscribe" data-channelid="UCdvViw-lmPEWHNPWtJUI8pQ" data-layout="default" data-count="default"></div>
+                  
+              </div>
+               
+            
+            </div>
+            
+           
             <div class="flex items-center">
               <!-- yutube -->
               <a
@@ -947,5 +972,6 @@
     <!-- end footer -->
 
     <script src="dist/script.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
   </body>
 </html>
